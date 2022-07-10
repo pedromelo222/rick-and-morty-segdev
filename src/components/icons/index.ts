@@ -1,3 +1,5 @@
+import IconArrowRight from './IconArrowRight.vue'
+import IconArrowLeft from './IconArrowLeft.vue'
 import IconSkull from './IconSkull.vue'
 import IconHeart from './IconHeart.vue'
 import IconQuestion from './IconQuestion.vue'
@@ -24,4 +26,6 @@ export {
   IconTV,
   IconLocation,
   IconSearch,
+  IconArrowLeft,
+  IconArrowRight,
 }
