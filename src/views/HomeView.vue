@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { RouterView } from 'vue-router'
+import CharacterList from '../components/CharacterList.vue'
 </script>
 
 <template>
-  <main>
-    Body
-  </main>
+  <CharacterList />
+  <Suspense>
+    <router-view />
+  </Suspense>
 </template>
