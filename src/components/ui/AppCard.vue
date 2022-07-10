@@ -1,13 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import {
-  IconGenderFemale,
-  IconGenderMale,
-  IconGenderless,
-  IconHeart,
-  IconQuestion,
-  IconSkull,
-} from '@/components/icons'
 import type { Gender, Status } from '@/types'
 import AppButton from '@/components/ui/AppButton.vue'
 import { useIconFromType } from '@/composables'
@@ -33,6 +24,9 @@ defineProps({
     required: true,
   },
 })
+/**
+ * Composable que retorna os icons do tipo gender e status
+ */
 const { getIconGender, getIconStatus } = useIconFromType()
 </script>
 

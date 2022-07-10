@@ -6,6 +6,10 @@ import Footer from './components/Footer.vue'
 </script>
 
 <template>
+  <!--
+   Aplicando named slots no componente AppLayout
+   facilita a visualização do visualização da estrutura
+   -->
   <AppLayout>
     <template #head>
       <Navbar />

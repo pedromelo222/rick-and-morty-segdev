@@ -9,6 +9,11 @@ import CharacterPagination from '@/components/CharacterPagination.vue'
   <CharacterFilter />
   <CharacterList />
   <CharacterPagination />
+  <!--
+    Embora o componente <Suspense> ainda esteja como "Experimental Future"
+    na documentação do vue, acredito que não exista problemas em
+    aplicar ele aqui, pois não está sendo utilizado com mais de uma Promise.
+      -->
   <Suspense>
     <router-view />
   </Suspense>

@@ -8,6 +8,9 @@ import { useCharacterStore } from '@/stores'
 import type { Character } from '@/types'
 
 const characterStore = useCharacterStore()
+/**
+ * Composable que retorna os icons do tipo gender e status
+ */
 const { getIconGender, getIconStatus } = useIconFromType()
 const { replace } = useRouter()
 

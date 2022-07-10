@@ -8,7 +8,6 @@ import {
   IconQuestion,
   IconSearch,
   IconSkull,
-  IconTimes,
 } from './icons'
 import AppButtonGroup from './ui/AppButtonGroup.vue'
 import AppButton from './ui/AppButton.vue'

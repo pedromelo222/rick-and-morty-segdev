@@ -1,3 +1,8 @@
+/**
+ * Seguindo o conceito de DRY, criei esse composable para retornar
+ * os icones do tipo 'gender' e 'status' passando uma string por parametro
+ */
+
 import {
   IconGenderFemale,
   IconGenderMale,

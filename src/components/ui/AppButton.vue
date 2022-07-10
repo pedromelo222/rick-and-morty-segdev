@@ -57,6 +57,10 @@ defineProps({
 </script>
 
 <template>
+  <!--
+    Estou usando a pattern do vue "component dynamic"
+    para poder utilizar o componente como:  <RouterLink> e <button>
+    -->
   <component
     :is="tag"
     class="btn"
