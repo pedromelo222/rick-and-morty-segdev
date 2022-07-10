@@ -1,45 +1,19 @@
 <script setup lang="ts">
 import { type Ref, ref, watch } from 'vue'
-import {
-  IconGenderFemale,
-  IconGenderMale,
-  IconGenderless,
-  IconHeart,
-  IconQuestion,
-  IconSearch,
-  IconSkull,
-} from './icons'
 import AppButtonGroup from './ui/AppButtonGroup.vue'
 import AppButton from './ui/AppButton.vue'
 import { useFiltersStore } from '@/stores'
 import AppInput from '@/components/ui/AppInput.vue'
 import type { Filters, Gender, Status } from '@/types'
+import { useDefinedApiList } from '@/composables'
 
 const searchValue = ref('')
 const filtersStore = useFiltersStore()
 
-interface GenderItem {
-  name: Gender
-  icon: Ref
-}
-
-interface statusItem {
-  name: Status
-  icon: Ref
-}
-
-const genderList: GenderItem[] = [
-  { name: 'Male', icon: IconGenderMale },
-  { name: 'Female', icon: IconGenderFemale },
-  { name: 'Genderless', icon: IconGenderless },
-  { name: 'unknown', icon: IconQuestion },
-]
-
-const statusList: statusItem[] = [
-  { name: 'Alive', icon: IconHeart },
-  { name: 'Dead', icon: IconSkull },
-  { name: 'unknown', icon: IconQuestion },
-]
+/**
+ * Composable para retonar a lista de 'gender' e 'status'.
+ */
+const { genderList, statusList } = useDefinedApiList()
 
 function setGender(name: Gender) {
   const filter: Filters = {
