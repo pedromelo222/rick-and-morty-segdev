@@ -6,6 +6,9 @@ import { IconTimes } from '@/components/icons'
  * AppInput usa o metodo two-way data binding
  * para sincronizar a propiedade modelValue com o componente pai.
  */
+
+type timeout = number | ReturnType<typeof setTimeout>
+
 const props = defineProps({
   modelValue: {
     type: String,
@@ -27,7 +30,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 const input = ref<HTMLInputElement | null>()
 
-let debounceTime: number
+let debounceTime: timeout
 function emitValue(e: Event) {
   const event = (e.target === document ? (e.target as Document).documentElement : e.target
   ) as HTMLInputElement
