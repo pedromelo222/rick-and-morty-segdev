@@ -2,5 +2,7 @@
 </script>
 
 <template>
-  <main />
+  <main>
+    Body
+  </main>
 </template>
