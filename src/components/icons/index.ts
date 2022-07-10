@@ -9,6 +9,7 @@ import IconPlanet from './IconPlanet.vue'
 import IconDna from './IconDna.vue'
 import IconTV from './IconTV.vue'
 import IconLocation from './IconLocation.vue'
+import IconSearch from './IconSearch.vue'
 
 export {
   IconSkull,
@@ -22,4 +23,5 @@ export {
   IconDna,
   IconTV,
   IconLocation,
+  IconSearch,
 }
