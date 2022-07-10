@@ -1,3 +1,4 @@
 import { useIconFromType } from './useIconFromType'
+import { useHideScroll } from './useHideScroll'
 
-export { useIconFromType }
+export { useIconFromType, useHideScroll }
