@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { type Ref, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import AppButtonGroup from './ui/AppButtonGroup.vue'
 import AppButton from './ui/AppButton.vue'
+import { IconSearch } from './icons'
 import { useFiltersStore } from '@/stores'
 import AppInput from '@/components/ui/AppInput.vue'
 import type { Filters, Gender, Status } from '@/types'
