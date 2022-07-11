@@ -47,7 +47,7 @@ function scrollTop() {
       <IconArrowLeft class="h-7" />
     </AppButton>
     <div class="font-medium ">
-      {{ ` Page ${paginationStore.actualPage}/${paginationStore.pagination.pages} ` }}
+      {{ ` Page ${paginationStore.actualPage}/${paginationStore.getTotalPages} ` }}
     </div>
     <AppButton
       :disabled="!paginationStore.isNextPage"

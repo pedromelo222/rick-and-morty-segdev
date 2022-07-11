@@ -14,6 +14,9 @@ export const usePaginationStore = defineStore('pagination', {
     isPreviousPage: (state) => {
       return state.pagination.prev !== null
     },
+    getTotalPages: (state) => {
+      return state.pagination.pages ? state.pagination.pages : 1
+    },
   },
   actions: {
     setPagination(pagination: Pagination) {
