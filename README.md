@@ -61,7 +61,7 @@ npx vite
 
 - Foi utilizada a biblioteca Pinia como state management. Existem 3 módulos na aplicação: personagens, filtros e paginação. O módulo personagens observa os demais módulos, permitindo fazer novos requests na API toda vez que o estado do filtro ou paginação são alterados. 
 
-- O modal de visualização do personagem é uma rota diferente. É utilizado um componente filho para rota principal. A vantagem de utilizar a página dessa forma é poder acessar as informações de um personagem por uma url ex: [rickandmorty-segdev.netlify.app/character/2](rickandmorty-segdev.netlify.app/character/2). Além disso, o usuário que está acessando não precisa sair da página para checar mais informações.
+- O modal de visualização do personagem é uma rota diferente. É utilizado um componente filho para rota principal. A vantagem de utilizar a página dessa forma é poder acessar as informações de um personagem por uma url ex: [rickandmorty-segdev.netlify.app/character/2](https://rickandmorty-segdev.netlify.app/character/2). Além disso, o usuário que está acessando não precisa sair da página para checar mais informações.
 
 
 
