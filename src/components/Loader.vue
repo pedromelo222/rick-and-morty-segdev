@@ -38,18 +38,18 @@ watch(() => props.show, () => {
 </template>
 
 <style scoped>
+/* Rotate animation https://www.w3schools.com/howto/howto_css_flip_image.asp */
+
 .shadow {
     box-shadow: 0px 3px 0px black;
 }
 
-/* The flip box container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-box {
   width: 70px;
   height: 70px;
-  perspective: 300px; /* Remove this if you don't want the 3D effect */
+  perspective: 300px;
 }
 
-/* This container is needed to position the front and back side */
 .flip-box-inner {
   position: relative;
   text-align: center;
@@ -66,7 +66,6 @@ watch(() => props.show, () => {
 
 }
 
-/* Position the front and back side */
 .flip-box-front, .flip-box-back {
   position: absolute;
   width: 100%;
@@ -75,7 +74,6 @@ watch(() => props.show, () => {
   backface-visibility: hidden;
 }
 
-/* Style the back side */
 .flip-box-back {
   transform: rotateY(180deg);
 }
