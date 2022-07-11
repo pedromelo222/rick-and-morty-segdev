@@ -18,4 +18,7 @@ import { IconGithub } from '@/components/icons'
       </AppButton>
     </div>
   </div>
+  <div class="absolute top-44 sm:top-44 md:top-40  lg:top-24 xl:top-12 -z-10">
+    <img src="@/assets/picklerick.png" class="w-[200px] md:w-[250px] lg:w-[300px] xl:w-[400px] rotate-12">
+  </div>
 </template>
