@@ -12,7 +12,7 @@ const characterStore = useCharacterStore()
  * Composable que retorna os icons do tipo gender e status
  */
 const { getIconGender, getIconStatus } = useIconFromType()
-const { replace } = useRouter()
+const { replace, go } = useRouter()
 
 /**
  * Composable que tem a função de esconder o scroll ao abrir o modal
@@ -47,70 +47,80 @@ if (character.value === undefined)
  */
 if (!character.value)
   replace({ name: 'not-found' })
+
+/**
+   * Click outside do modal volta para rota anterior
+  */
+function clickOutside() {
+  go(-1)
+}
 </script>
 
 <template>
   <teleport to="#modal">
     <div class="fixed inset-0 z-30 h-screen w-full backdrop-brightness-50" />
-    <div class="overflow-y-auto fixed inset-0 z-30  w-full flex justify-center ">
-      <div v-if="character" class="modal-box self-center flex flex-col md:flex-row p-3 md:p-5 mx-4 relative max-w-4xl w-full bg-white  border-2 border-black rounded-xl ">
-        <AppButton
-          tag="RouterLink"
-          to="/"
-          class="absolute -right-3 -top-4"
-          rounded="full"
-          icon
-        >
-          <IconTimes class="h-5" />
-        </AppButton>
-        <div class="w-full flex justify-center md:w-auto h-full -mt-4 mb-3 md:mt-0 ">
-          <img :src="character?.image" class="border-2 border-black rounded-xl -rotate-12 max-h-[200px] md:max-h-[300px]">
-        </div>
-        <div class="ml-8 ">
-          <p class="text-3xl md:text-6xl">
-            {{ character?.name }}
-          </p>
 
-          <ul class="pl-6 text-xl list-none space-y-1 mt-2">
-            <li class="flex items-center">
-              <span class="w-10 mr-1">
-                <component :is="getIconStatus(character.status)" class="h-8 w-10" />
-              </span>
-              {{ character.status }}
-            </li>
-            <li class="flex items-center">
-              <span class="w-10 mr-1">
-                <component :is="getIconGender(character.gender)" class="h-8 w-10" />
-              </span>
-              {{ character.gender }}
-            </li>
-            <li class="flex items-center">
-              <span class="w-10 mr-1">
-                <IconDna class="h-10 " />
-              </span>
-              {{ character.species }}
-            </li>
-            <li class="flex items-center">
-              <span class="w-10 mr-1">
-                <IconPlanet class="h-9 w-10" />
-              </span>
-              {{ character.origin.name }}
-            </li>
-            <li class="flex items-center">
-              <span class="w-10 mr-1">
-                <IconLocation class="h-9 w-10" />
-              </span>
-              {{ character.location.name }}
-            </li>
-            <li class="flex items-center">
-              <span class="w-10 mr-1">
-                <IconTV class="h-9 w-10" />
-              </span>
-              {{ `Episodes: ${character.episode.length}` }}
-            </li>
-          </ul>
+    <div v-if="character" class="overflow-y-auto fixed inset-0 z-30  w-full flex justify-center " @click.self="clickOutside">
+      <transition name="scale" mode="out-in" appear>
+        <div class="modal-box self-center flex flex-col md:flex-row p-3 md:p-5 mx-4 relative max-w-4xl w-full bg-white  border-2 border-black rounded-xl ">
+          <AppButton
+            tag="RouterLink"
+            to="/"
+            class="absolute -right-3 -top-4"
+            rounded="full"
+            icon
+          >
+            <IconTimes class="h-5" />
+          </AppButton>
+          <div class="w-full flex justify-center md:w-auto h-full -mt-4 mb-3 md:mt-0 ">
+            <img :src="character?.image" class="border-2 border-black rounded-xl -rotate-12 max-h-[200px] md:max-h-[300px]">
+          </div>
+          <div class="ml-8 ">
+            <p class="text-3xl md:text-6xl">
+              {{ character?.name }}
+            </p>
+
+            <ul class="pl-6 text-xl list-none space-y-1 mt-2">
+              <li class="flex items-center">
+                <span class="w-10 mr-1">
+                  <component :is="getIconStatus(character.status)" class="h-8 w-10" />
+                </span>
+                {{ character.status }}
+              </li>
+              <li class="flex items-center">
+                <span class="w-10 mr-1">
+                  <component :is="getIconGender(character.gender)" class="h-8 w-10" />
+                </span>
+                {{ character.gender }}
+              </li>
+              <li class="flex items-center">
+                <span class="w-10 mr-1">
+                  <IconDna class="h-10 " />
+                </span>
+                {{ character.species }}
+              </li>
+              <li class="flex items-center">
+                <span class="w-10 mr-1">
+                  <IconPlanet class="h-9 w-10" />
+                </span>
+                {{ character.origin.name }}
+              </li>
+              <li class="flex items-center">
+                <span class="w-10 mr-1">
+                  <IconLocation class="h-9 w-10" />
+                </span>
+                {{ character.location.name }}
+              </li>
+              <li class="flex items-center">
+                <span class="w-10 mr-1">
+                  <IconTV class="h-9 w-10" />
+                </span>
+                {{ `Episodes: ${character.episode.length}` }}
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </transition>
     </div>
   </teleport>
 </template>
@@ -118,6 +128,15 @@ if (!character.value)
 <style scoped>
 .modal-box, img {
   box-shadow: 2px 4px 0px black;
+}
+
+.scale-enter-active, .scale-leave-active {
+  transition: all 0.3s ease;
+}
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
 }
 </style>
 
