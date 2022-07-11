@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { useCharacterStore } from '@/stores'
 import type { Filters } from '@/types'
 
 export const useFiltersStore = defineStore('filters', {
@@ -13,13 +12,10 @@ export const useFiltersStore = defineStore('filters', {
     getStatus: (state) => {
       return state.filters.status
     },
-
   },
   actions: {
     async setFilters(filters: Filters) {
-      const characterStore = useCharacterStore()
       this.filters = { ...this.filters, ...filters }
-      characterStore.fetchCharacterList()
     },
 
   },

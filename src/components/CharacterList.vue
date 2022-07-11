@@ -14,9 +14,9 @@ const { getIconGender, getIconStatus } = useIconFromType()
 </script>
 
 <template>
-  <div v-show="!characterStore.emptySeach" class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
+  <div v-show="!characterStore.state.emptySeach" class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4 lg:gap-8">
     <AppCard
-      v-for="(character, key) in characterStore.characters"
+      v-for="(character, key) in characterStore.state.characters"
       :key="key"
     >
       <template #image>
@@ -43,7 +43,7 @@ const { getIconGender, getIconStatus } = useIconFromType()
       </template>
     </AppCard>
   </div>
-  <div v-show="characterStore.emptySeach" class="flex w-full justify-center">
+  <div v-show="characterStore.state.emptySeach" class="flex w-full justify-center">
     <img src="@/assets/not-found.png" class="w-[500px]">
   </div>
 </template>
