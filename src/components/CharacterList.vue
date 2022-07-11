@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import AppCard from './ui/AppCard.vue'
 import { useCharacterStore } from '@/stores'
-import AppCard from '@/components/ui/AppCard.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import { useIconFromType } from '@/composables'
 
@@ -43,7 +43,12 @@ const { getIconGender, getIconStatus } = useIconFromType()
       </template>
     </AppCard>
   </div>
-  <div v-show="characterStore.state.emptySeach" class="flex w-full justify-center">
+  <div v-show="characterStore.state.emptySeach" class="relative flex w-full justify-center flex-col items-center">
+    <AppCard class="absolute -rotate-12 opacity-90 pb-3" :card-footer="false">
+      <template #body>
+        No characters found
+      </template>
+    </AppCard>
     <img src="@/assets/not-found.png" class="w-[500px]">
   </div>
 </template>
