@@ -13,6 +13,7 @@ export const useCharacterStore = defineStore('characters', () => {
   const state = ref({
     characters: [] as Character[],
     emptySeach: false,
+    loading: true,
   })
 
   const pagination = usePaginationStore()
@@ -35,9 +36,13 @@ export const useCharacterStore = defineStore('characters', () => {
   function getCharacterById(characterId: number) {
     return state.value.characters.find((char: { id: number }) => char.id === characterId)
   }
+  function isLoading() {
+    return state.value.loading
+  }
 
   async function fetchCharacterList() {
     pagination.lastPage = pagination.actualPage
+    state.value.loading = true
     try {
       const { data } = await HTTP.get('/character/', {
         params: { ...filters.filters, page: pagination.actualPage },
@@ -53,14 +58,21 @@ export const useCharacterStore = defineStore('characters', () => {
 
       return false
     }
+    finally {
+      state.value.loading = false
+    }
   }
   async function fetchCharacterById(id: number) {
+    state.value.loading = true
     try {
       const { data } = await HTTP.get(`/character/${id}`)
       return data
     }
     catch (err: any) {
       return false
+    }
+    finally {
+      state.value.loading = false
     }
   }
 
@@ -69,6 +81,7 @@ export const useCharacterStore = defineStore('characters', () => {
     fetchCharacterList,
     fetchCharacterById,
     getCharacterById,
+    isLoading,
   }
 })
 
