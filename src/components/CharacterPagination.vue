@@ -4,34 +4,40 @@ import {
   IconArrowLeft,
   IconArrowRight,
 } from './icons'
-import { useCharacterStore } from '@/stores'
-const characterStore = useCharacterStore()
+import { usePaginationStore } from '@/stores'
+const paginationStore = usePaginationStore()
 
 function nextPage() {
-  if (characterStore.pagination.next) {
-    characterStore.getNextCharacterList()
+  if (paginationStore.isNextPage) {
+    paginationStore.setNextPage()
     scrollTop()
   }
 }
 function previousPage() {
-  if (characterStore.pagination.prev) {
-    characterStore.getPreviousCharacterList()
+  if (paginationStore.isPreviousPage) {
+    paginationStore.setPreviousPage()
     scrollTop()
   }
 }
 
 function scrollTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  })
+  // setTimeout(() => {
+  const startOfSearch = document.getElementById('content-body')
+  if (startOfSearch) {
+    window.scrollTo({
+      top: startOfSearch.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+
+  // }, 400)
 }
 </script>
 
 <template>
   <div class="flex justify-center items-center gap-4 py-14">
     <AppButton
-      :class="{ 'cursor-not-allowed': !characterStore.pagination.prev }"
+      :class="{ 'cursor-not-allowed': !paginationStore.isPreviousPage }"
       icon
       color="green"
       rounded="full"
@@ -40,10 +46,10 @@ function scrollTop() {
       <IconArrowLeft class="h-7" />
     </AppButton>
     <div class="font-medium ">
-      {{ ` Page 1/${characterStore.pagination.pages} ` }}
+      {{ ` Page ${paginationStore.actualPage}/${paginationStore.pagination.pages} ` }}
     </div>
     <AppButton
-      :class="{ 'cursor-not-allowed': !characterStore.pagination.next }"
+      :class="{ 'cursor-not-allowed': !paginationStore.isNextPage }"
       icon
       color="green"
       rounded="full"

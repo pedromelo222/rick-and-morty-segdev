@@ -2,7 +2,7 @@
   <div class="flex w-full sm:p-0">
     <slot name="head" />
   </div>
-  <div class="bg-blue-500">
+  <div id="content-body" class="bg-blue-500 scroll-smooth">
     <div class="mx-auto max-w-7xl px-3">
       <slot name="body" />
     </div>

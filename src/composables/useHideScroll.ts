@@ -1,15 +1,9 @@
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 
 const scrollbarWidth = ref<number>(0)
 const isScrollHidden = ref(false)
 
 function useHideScroll() {
-  onMounted(() => {
-    nextTick(() => {
-      scrollbarWidth.value = window.innerWidth - document.body.scrollWidth
-    })
-  })
-
   const showScroll = () => {
     isScrollHidden.value = false
     document.body.style.overflowY = ''
@@ -18,6 +12,7 @@ function useHideScroll() {
 
   const hideScroll = () => {
     isScrollHidden.value = true
+    scrollbarWidth.value = window.innerWidth - document.body.scrollWidth
     document.body.style.overflowY = 'hidden'
     if (scrollbarWidth.value > 0)
       document.body.style.paddingRight = `${scrollbarWidth.value}px`

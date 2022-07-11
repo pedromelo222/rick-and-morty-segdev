@@ -41,6 +41,12 @@ character.value = characterStore.getCharacterById(characterId)
  */
 if (character.value === undefined)
   character.value = await characterStore.fetchCharacterById(characterId)
+
+/**
+ * Caso não encontre o id redireciona para página 404
+ */
+if (!character.value)
+  replace({ name: 'not-found' })
 </script>
 
 <template>

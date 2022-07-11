@@ -1,82 +1,75 @@
 import { defineStore } from 'pinia'
-import { useFiltersStore } from '@/stores'
-import type { Character, Pagination } from '@/types'
+import { ref } from 'vue'
+import { useFiltersStore, usePaginationStore } from '@/stores'
+import type { Character } from '@/types'
 import HTTP from '@/plugin/http'
 
-export const useCharacterStore = defineStore('characters', {
-  state: () => ({
+/**
+ * Utilizando pinia no modo setup store, a ideia é
+ * aplicar a pattern observer para identificar mudanças no
+ * filtros e na paginação.
+ */
+export const useCharacterStore = defineStore('characters', () => {
+  const state = ref({
     characters: [] as Character[],
-    pagination: {} as Pagination,
     emptySeach: false,
-  }),
-  getters: {
-    getCharacterById: (state) => {
-      return (characterId: number) => state.characters.find(char => char.id === characterId)
-    },
+  })
 
-  },
-  actions: {
-    async fetchCharacterList() {
-      const filtersStore = useFiltersStore()
-      try {
-        const { data } = await HTTP.get('/character/', { params: filtersStore.filters })
-        this.characters = data.results
-        this.pagination = data.info
-        this.emptySeach = false
+  const pagination = usePaginationStore()
+  const filters = useFiltersStore()
 
-        return data
-      }
-      catch (err: any) {
-        if (err.response.data.error.includes('There is nothing here'))
-          this.emptySeach = true
+  /**
+   * $subscribe (Semelhante ao 'watcher' do vue),
+   * para observar a filtersStore, qualquer mudança no stado do filtro é chamada a função.
+   */
+  filters.$subscribe(() => {
+    pagination.setPage(1)
+    fetchCharacterList()
+  })
 
-        return err.response.data
-      }
-    },
-    async fetchCharacterById(id: number) {
-      /**
-       * Aqui estou usando a store apenas como API, talvez seja interessante refatorar
-       * e criar uma API
-       */
-      try {
-        const { data } = await HTTP.get(`/character/${id}`)
+  pagination.$subscribe(() => {
+    if (pagination.lastPage !== pagination.actualPage)
+      fetchCharacterList()
+  })
 
-        return data
-      }
-      catch (err: any) {
-        return err.response.data
-      }
-    },
-    // change name
-    async getNextCharacterList() {
-      if (this.pagination.next) {
-        try {
-          const { data } = await HTTP.get(this.pagination.next)
-          this.characters = data.results
-          this.pagination = data.info
+  function getCharacterById(characterId: number) {
+    return state.value.characters.find((char: { id: number }) => char.id === characterId)
+  }
 
-          return data
-        }
-        catch (err: any) {
-          return err.response.data
-        }
-      }
-    },
-    // change name
-    async getPreviousCharacterList() {
-      if (this.pagination.prev) {
-        try {
-          const { data } = await HTTP.get(this.pagination.prev)
-          this.characters = data.results
-          this.pagination = data.info
+  async function fetchCharacterList() {
+    pagination.lastPage = pagination.actualPage
+    try {
+      const { data } = await HTTP.get('/character/', {
+        params: { ...filters.filters, page: pagination.actualPage },
+      })
+      state.value.characters = data.results
+      pagination.setPagination(data.info)
+      state.value.emptySeach = false
 
-          return data
-        }
-        catch (err: any) {
-          return err.response.data
-        }
-      }
-    },
-  },
+      return data
+    }
+    catch (err: any) {
+      if (err.response.data.error.includes('There is nothing here'))
+        state.value.emptySeach = true
+
+      return false
+    }
+  }
+  async function fetchCharacterById(id: number) {
+    try {
+      const { data } = await HTTP.get(`/character/${id}`)
+      return data
+    }
+    catch (err: any) {
+      return err.response.data
+    }
+  }
+
+  return {
+    state,
+    fetchCharacterList,
+    fetchCharacterById,
+    getCharacterById,
+  }
 })
 
