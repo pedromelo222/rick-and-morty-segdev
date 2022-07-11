@@ -53,6 +53,10 @@ defineProps({
       ].includes(value)
     },
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 </script>
 
@@ -64,6 +68,7 @@ defineProps({
   <component
     :is="tag"
     class="btn"
+    :disabled="disabled"
     :class="[
       `btn-${color}`,
       `btn-rounded-${rounded}`,
@@ -135,5 +140,9 @@ defineProps({
     -webkit-transform: translate(0px, 6px);
     -ms-transform: translate(0px, 6px);
     transform: translate(0px, 6px);
+}
+
+.btn:disabled{
+  @apply opacity-50 pointer-events-none;
 }
 </style>
