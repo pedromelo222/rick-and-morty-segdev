@@ -25,12 +25,12 @@ export const useCharacterStore = defineStore('characters', () => {
   filters.$subscribe(() => {
     pagination.setPage(1)
     fetchCharacterList()
-  })
+  }, { detached: true })
 
   pagination.$subscribe(() => {
     if (pagination.lastPage !== pagination.actualPage)
       fetchCharacterList()
-  })
+  }, { detached: true })
 
   function getCharacterById(characterId: number) {
     return state.value.characters.find((char: { id: number }) => char.id === characterId)
@@ -60,7 +60,7 @@ export const useCharacterStore = defineStore('characters', () => {
       return data
     }
     catch (err: any) {
-      return err.response.data
+      return false
     }
   }
 

@@ -27,30 +27,30 @@ const characterId = Number(useRoute().params.id)
  * verifica se parametro passado na url é um numero valido,
  * caso seja outro tipo redireciona para pagina 404
  */
-if (isNaN(characterId))
-  replace({ name: 'not-found' })
+if (isNaN(characterId)) { replace({ name: 'not-found' }) }
+else {
+  character.value = characterStore.getCharacterById(characterId)
 
-character.value = characterStore.getCharacterById(characterId)
-
-/**
+  /**
  * Caso não encontre o personagem será necessário solicitar a store
  * para fazer uma requisição a API em busca do personagem.
  *
  * obs: um dos motivos de não encontrar o personagem salvo na store é pelo fato
  * de que o usuário acessou essa rota de um outro domínio.
  */
-if (character.value === undefined)
-  character.value = await characterStore.fetchCharacterById(characterId)
+  if (character.value === undefined)
+    character.value = await characterStore.fetchCharacterById(characterId)
 
-/**
+  /**
  * Caso não encontre o id redireciona para página 404
  */
-if (!character.value)
-  replace({ name: 'not-found' })
+  if (!character.value)
+    replace({ name: 'not-found' })
 
 /**
    * Click outside do modal volta para rota anterior
   */
+}
 function clickOutside() {
   go(-1)
 }
