@@ -38,7 +38,7 @@ function scrollTop() {
 <template>
   <div v-show="!characterStore.state.emptySeach" class="flex justify-center items-center gap-4 py-14">
     <AppButton
-      :class="{ 'cursor-not-allowed': !paginationStore.isPreviousPage }"
+      :disabled="!paginationStore.isPreviousPage"
       icon
       color="green"
       rounded="full"
@@ -50,7 +50,7 @@ function scrollTop() {
       {{ ` Page ${paginationStore.actualPage}/${paginationStore.pagination.pages} ` }}
     </div>
     <AppButton
-      :class="{ 'bg-opacity/50 cursor-not-allowed': !paginationStore.isNextPage }"
+      :disabled="!paginationStore.isNextPage"
       icon
       color="green"
       rounded="full"
