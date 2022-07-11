@@ -1,11 +1,23 @@
+<script setup lang="ts">
+defineProps({
+  cardBody: {
+    type: Boolean,
+    default: true,
+  },
+  cardFooter: {
+    type: Boolean,
+    default: true,
+  },
+})
+</script>
+
 <template>
   <div class="card">
     <slot name="image" />
-
-    <div class="card-body">
+    <div v-show="cardBody" class="card-body">
       <slot name="body" />
     </div>
-    <div class="card-footer">
+    <div v-show="cardFooter" class="card-footer">
       <slot name="footer" />
     </div>
   </div>
@@ -13,7 +25,7 @@
 
 <style>
 .card {
-  @apply bg-white border-2 border-black rounded-lg overflow-hidden w-full xl:w-[300px] flex flex-col justify-between ;
+  @apply bg-white border-2 border-black rounded-lg overflow-hidden flex flex-col justify-between ;
   box-shadow: 5px 5px 0px black;
 }
 .card-body {

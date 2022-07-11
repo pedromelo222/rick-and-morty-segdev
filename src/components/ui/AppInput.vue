@@ -74,7 +74,7 @@ function clear() {
 </script>
 
 <template>
-  <div class="input-wrapper" @click="inputFocus">
+  <div class="input-wrapper" @click.self="inputFocus">
     <div class="input-left-icon">
       <slot name="left-icon" />
     </div>

@@ -8,8 +8,8 @@ import AppInput from '@/components/ui/AppInput.vue'
 import type { Filters, Gender, Status } from '@/types'
 import { useDefinedApiList } from '@/composables'
 
-const searchValue = ref('')
 const filtersStore = useFiltersStore()
+const searchValue = ref(filtersStore.filters.name || '')
 
 /**
  * Composable para retonar a lista de 'gender' e 'status'.

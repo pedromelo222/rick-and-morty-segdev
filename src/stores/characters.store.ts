@@ -13,6 +13,7 @@ export const useCharacterStore = defineStore('characters', () => {
   const state = ref({
     characters: [] as Character[],
     emptySeach: false,
+    loading: true,
   })
 
   const pagination = usePaginationStore()
@@ -25,19 +26,23 @@ export const useCharacterStore = defineStore('characters', () => {
   filters.$subscribe(() => {
     pagination.setPage(1)
     fetchCharacterList()
-  })
+  }, { detached: true })
 
   pagination.$subscribe(() => {
     if (pagination.lastPage !== pagination.actualPage)
       fetchCharacterList()
-  })
+  }, { detached: true })
 
   function getCharacterById(characterId: number) {
     return state.value.characters.find((char: { id: number }) => char.id === characterId)
   }
+  function isLoading() {
+    return state.value.loading
+  }
 
   async function fetchCharacterList() {
     pagination.lastPage = pagination.actualPage
+    state.value.loading = true
     try {
       const { data } = await HTTP.get('/character/', {
         params: { ...filters.filters, page: pagination.actualPage },
@@ -49,19 +54,25 @@ export const useCharacterStore = defineStore('characters', () => {
       return data
     }
     catch (err: any) {
-      if (err.response.data.error.includes('There is nothing here'))
-        state.value.emptySeach = true
+      state.value.emptySeach = true
 
       return false
     }
+    finally {
+      state.value.loading = false
+    }
   }
   async function fetchCharacterById(id: number) {
+    state.value.loading = true
     try {
       const { data } = await HTTP.get(`/character/${id}`)
       return data
     }
     catch (err: any) {
-      return err.response.data
+      return false
+    }
+    finally {
+      state.value.loading = false
     }
   }
 
@@ -70,6 +81,7 @@ export const useCharacterStore = defineStore('characters', () => {
     fetchCharacterList,
     fetchCharacterById,
     getCharacterById,
+    isLoading,
   }
 })
 
