@@ -49,7 +49,7 @@ export const useCharacterStore = defineStore('characters', () => {
       return data
     }
     catch (err: any) {
-      if (err.resaponse.data.error.includes('There is nothing here'))
+      if (err.response.data.error.includes('There is nothing here'))
         state.value.emptySeach = true
 
       return false
@@ -61,7 +61,7 @@ export const useCharacterStore = defineStore('characters', () => {
       return data
     }
     catch (err: any) {
-      return false
+      return err.response.data
     }
   }
 
