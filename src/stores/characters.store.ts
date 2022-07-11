@@ -49,10 +49,10 @@ export const useCharacterStore = defineStore('characters', () => {
       return data
     }
     catch (err: any) {
-      if (err.response.data.error.includes('There is nothing here'))
+      if (err.resaponse.data.error.includes('There is nothing here'))
         state.value.emptySeach = true
 
-      return err.response.data
+      return false
     }
   }
   async function fetchCharacterById(id: number) {
@@ -61,7 +61,7 @@ export const useCharacterStore = defineStore('characters', () => {
       return data
     }
     catch (err: any) {
-      return err.response.data
+      return false
     }
   }
 
