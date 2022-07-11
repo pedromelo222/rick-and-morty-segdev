@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia'
 import type { Pagination } from '@/types'
 
+let local = localStorage.getItem('pagination')
+if (local)
+  local = JSON.parse(local)
+
 export const usePaginationStore = defineStore('pagination', {
   state: () => ({
     pagination: {} as Pagination,
-    actualPage: 1,
+    actualPage: (local || 1) as number,
     lastPage: 1,
   }),
   getters: {
@@ -21,6 +25,7 @@ export const usePaginationStore = defineStore('pagination', {
   actions: {
     setPagination(pagination: Pagination) {
       this.pagination = pagination
+      localStorage.setItem('pagination', JSON.stringify(this.actualPage))
     },
     setNextPage() {
       if (this.isNextPage)

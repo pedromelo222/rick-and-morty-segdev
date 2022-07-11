@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia'
 import type { Filters } from '@/types'
 
+let local = localStorage.getItem('filters')
+if (local)
+  local = JSON.parse(local)
+
 export const useFiltersStore = defineStore('filters', {
   state: () => ({
-    filters: {} as Filters,
+    filters: (local || {}) as Filters,
   }),
   getters: {
     getGender: (state) => {
@@ -16,6 +20,7 @@ export const useFiltersStore = defineStore('filters', {
   actions: {
     async setFilters(filters: Filters) {
       this.filters = { ...this.filters, ...filters }
+      localStorage.setItem('filters', JSON.stringify(this.filters))
     },
 
   },
